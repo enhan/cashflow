@@ -1,6 +1,7 @@
 package eu.enhan.cashflow.core;
 
 import com.google.common.collect.ImmutableMap;
+import org.joda.time.DateMidnight;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -16,6 +17,8 @@ import static com.google.common.base.Preconditions.*;
  * To change this template use File | Settings | File Templates.
  */
 public class CashRegisterBuilder {
+
+
 
     public enum EuroValues {
         NOTE500(BigDecimal.valueOf(500)),
@@ -47,6 +50,7 @@ public class CashRegisterBuilder {
     }
 
     private String name;
+    private DateMidnight date;
 
     private final Map<BigDecimal, Integer> cashMap;
 
@@ -57,11 +61,12 @@ public class CashRegisterBuilder {
             cashMap.put(v.getValue(), 0);
         }
 
+        date = new DateMidnight();
     }
 
     public CashRegister build() {
         checkState(name != null);
-        return new CashRegister(name, ImmutableMap.<BigDecimal, Integer>copyOf(cashMap));
+        return new CashRegister(name, ImmutableMap.<BigDecimal, Integer>copyOf(cashMap), date);
     }
 
     public CashRegisterBuilder withName(String name) {
@@ -74,6 +79,9 @@ public class CashRegisterBuilder {
        return this;
    }
 
-
+    public CashRegisterBuilder withDate(DateMidnight dateMidnight) {
+        this.date = checkNotNull(dateMidnight);
+        return this;
+    }
 
 }

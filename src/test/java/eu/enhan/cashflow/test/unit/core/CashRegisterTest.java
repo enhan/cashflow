@@ -2,6 +2,7 @@ package eu.enhan.cashflow.test.unit.core;
 
 import eu.enhan.cashflow.core.CashRegister;
 import eu.enhan.cashflow.core.CashRegisterBuilder;
+import org.joda.time.DateMidnight;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -71,7 +72,7 @@ public class CashRegisterTest {
     public void totalCountTestCents(){
         // Given
         CashRegisterBuilder registerBuilder = new CashRegisterBuilder();
-        CashRegister register = registerBuilder.withName("Test").withValueForItem(COIN001,3).withValueForItem(COIN005,1).build();
+        CashRegister register = registerBuilder.withName("Test").withValueForItem(COIN001, 3).withValueForItem(COIN005, 1).build();
 
         // When
         BigDecimal count = register.getTotalValue();
@@ -81,7 +82,20 @@ public class CashRegisterTest {
 
     }
 
+    @Test
+    public void testWithDateCreation(){
+        // Given
+        CashRegisterBuilder registerBuilder = new CashRegisterBuilder();
+        DateMidnight dateExp = new DateMidnight(2013, 1, 10);
+        CashRegister register = registerBuilder.withName("Test").withValueForItem(COIN001,3).withValueForItem(COIN005,1).withDate(dateExp).build();
 
+        // When
+        DateMidnight date = register.getDate();
+
+        // Then
+        assertEquals(dateExp, date);
+
+    }
 
     /*
      *

@@ -2,6 +2,7 @@ package eu.enhan.cashflow.core;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
+import org.joda.time.DateMidnight;
 
 import java.math.BigDecimal;
 import java.util.Map;
@@ -17,11 +18,13 @@ public class CashRegister {
 
     private final String name ;
     private final ImmutableMap<BigDecimal, Integer> register;
+    private final DateMidnight date;
 
 
-    public CashRegister(String name, ImmutableMap<BigDecimal, Integer> register) {
+    public CashRegister(String name, ImmutableMap<BigDecimal, Integer> register, DateMidnight date) {
         this.name = Preconditions.checkNotNull(name);
-        this.register = register;
+        this.register = Preconditions.checkNotNull(register);
+        this.date = Preconditions.checkNotNull(date);
 
     }
 
@@ -32,4 +35,10 @@ public class CashRegister {
         }
         return result ;
     }
+
+
+    public DateMidnight getDate() {
+        return date;
+    }
+
 }
